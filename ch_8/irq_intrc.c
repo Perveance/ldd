@@ -21,11 +21,11 @@ static int __init my_init(void)
 {
 	pr_info("Loading module \n");
 	pr_info(" IRQ to intercept: %d\n", irq);
-	if (request_irq(irq, my_interrupt_handler, /*IRQF_SHARED*/ 0, "msz_interrupt", &my_dev_id)) {
+	if (request_irq(irq, my_interrupt_handler, IRQF_SHARED /*0*/, "msz_interrupt", &my_dev_id)) {
 		pr_info("Failed to set up a handler for irq %d\n", irq);
 		return -1;
 	}
-	printk("Successfully leading ISR handler\n");
+	printk("Successfully loading ISR handler\n");
 	return 0;
 }
 
