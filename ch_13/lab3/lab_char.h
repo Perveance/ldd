@@ -44,66 +44,6 @@ static inline int mycdrv_generic_release(struct inode *inode, struct file *file)
 	return 0;
 }
 
-/*
-static inline ssize_t
-mycdrv_generic_read(struct file *file, char __user * buf, size_t lbuf,
-		    loff_t * ppos)
-{
-	int nbytes, maxbytes, bytes_to_do;
-	maxbytes = ramdisk_size - *ppos;
-	bytes_to_do = maxbytes > lbuf ? lbuf : maxbytes;
-	if (bytes_to_do == 0)
-		pr_warning("Reached end of the device on a read");
-
-	nbytes = bytes_to_do - copy_to_user(buf, ramdisk + *ppos, bytes_to_do);
-	*ppos += nbytes;
-	pr_info("\n Leaving the   READ function, nbytes=%d, pos=%d\n",
-		nbytes, (int)*ppos);
-	return nbytes;
-}
-
-static inline ssize_t
-mycdrv_generic_write(struct file *file, const char __user * buf, size_t lbuf,
-		     loff_t * ppos)
-{
-	int nbytes, maxbytes, bytes_to_do;
-	maxbytes = ramdisk_size - *ppos;
-	bytes_to_do = maxbytes > lbuf ? lbuf : maxbytes;
-	if (bytes_to_do == 0)
-		pr_warning("Reached end of the device on a write");
-	nbytes =
-	    bytes_to_do - copy_from_user(ramdisk + *ppos, buf, bytes_to_do);
-	*ppos += nbytes;
-	pr_info("\n Leaving the   WRITE function, nbytes=%d, pos=%d\n",
-		nbytes, (int)*ppos);
-	return nbytes;
-}
-
-static inline loff_t mycdrv_generic_lseek(struct file *file, loff_t offset,
-					  int orig)
-{
-	loff_t testpos;
-	switch (orig) {
-	case SEEK_SET:
-		testpos = offset;
-		break;
-	case SEEK_CUR:
-		testpos = file->f_pos + offset;
-		break;
-	case SEEK_END:
-		testpos = ramdisk_size + offset;
-		break;
-	default:
-		return -EINVAL;
-	}
-	testpos = testpos < ramdisk_size ? testpos : ramdisk_size;
-	testpos = testpos >= 0 ? testpos : 0;
-	file->f_pos = testpos;
-	pr_info("Seeking to pos=%ld\n", (long)testpos);
-	return testpos;
-}
-*/
-
 static inline int __init my_generic_init(void)
 {
 	if (alloc_chrdev_region(&first, 0, count, MYDEV_NAME) < 0) {
